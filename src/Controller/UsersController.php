@@ -131,7 +131,7 @@ class UsersController extends AppController
         // Esto significa que los usuarios podrán acceder a estas acciones sin necesidad de iniciar sesión.
         // 'logout': Permite a los usuarios cerrar sesión en la aplicación.
         // 'add': Permite a los usuarios agregar nuevos elementos, probablemente en el contexto de una funcionalidad de CRUD.
-        $this->Auth->allow(['logout', 'add']);
+        $this->Auth->allow(['logout', 'add', 'register']);
     }
 
     public function logout()
@@ -139,6 +139,19 @@ class UsersController extends AppController
         $this->Flash->success('You are now logged out.');
         return $this->redirect($this->Auth->logout());
     }
-
     
+    // Método para registrar un nuevo usuario
+    public function register()
+    {
+        $user = $this->Users->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Usuario registrado correctamente.'));
+                return $this->redirect(['action' => 'login']);
+            }
+            $this->Flash->error(__('No se pudo registrar el usuario. Por favor, inténtelo de nuevo.'));
+        }
+        $this->set(compact('user'));
+    }
 }

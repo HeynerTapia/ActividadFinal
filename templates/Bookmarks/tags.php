@@ -12,6 +12,14 @@
 
         <!-- Use the TextHelper to format text -->
         <?= $this->Text->autoParagraph(h($bookmark->description)) ?>
+        
+        <!-- Add the additional link when the title is clicked -->
+        <?= $this->Html->scriptBlock('
+            document.querySelector("h4 a").addEventListener("click", function(event) {
+                event.preventDefault();
+                window.location.href = "http://localhost:8765/bookmarks/tagged/Padre%20Rico,%20Padre%20pobre";
+            });
+        '); ?>
     </article>
 <?php endforeach; ?>
 </section>

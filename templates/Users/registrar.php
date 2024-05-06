@@ -1,11 +1,4 @@
-<h1>Login</h1>
-<?= $this->Form->create() ?>
-<?= $this->Form->control('email') ?>
-<?= $this->Form->control('password') ?>
-<?= $this->Form->button('Login') ?>
-<?= $this->Form->end() ?>
-
-<?= $this->Form->create($users) ?>
+<?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Registrar Usuario') ?></legend>
         <?= $this->Form->control('username', ['label' => 'Nombre de usuario']) ?>
