@@ -88,6 +88,7 @@ endif;
         <div class="container">
             <div class="content">
                 <hr>
+                <!-- UNA DESCRIPCION DE LA PAGINA PARA VER DE QUE TRATA LA PAGINA -->
                 <div class="column">
                         <h4>Librería y Papelería</h4>
                         <ul>
@@ -101,7 +102,8 @@ endif;
                 <hr>
                     <div class="column text-center">
                         <div class="row">
-                            <div class="column links">
+                            <!-- 3 BOTONES PARA REGISTARNOS, LOGUEARNOS Y REGISTRAR -->
+                            <div class="column links">  
                                 <h3 style="text-align: left;">Accede a nuestra pagina</h3>
                                 <a href="http://localhost:8765/users/login">
                                     <button>Login</button>
@@ -109,21 +111,30 @@ endif;
                                 <a href="http://localhost:8765/users/logout">
                                     <button>Logout</button>
                                 </a>
+                                <a href="http://localhost:8765/users/add">
+                                    <button>REgistrar</button>
+                                </a>
                             </div>
                         </div>
                     </div>
                 <hr>
                 <div class="column text-center">
                         <div class="row">
+                            <!-- LA CONECCION DE LOS BOTONES A LA url DEL MENU -->
                             <div class="column links">
-                                <h3 style="text-align: left;">MENU</h3>
+                                <h3 style="text-align: left;">LIBROS</h3>
                                 <a href="http://localhost:8765/bookmarks/tagged/">
-                                    <button>LIBROS</button>
+                                    <button>VER LIBROS</button>
                                 </a>
+                                <a href="http://localhost:8765/bookmarks/add">
+                                    <button>AÑADIR LIBRO</button>
+                                </a>
+
                             </div>
                         </div>
                     </div>
                 <div class="row">
+                    <!-- SE CARGAN LAS URL A LOS BOTONES PARA EL CONTACT -->
                     <div class="column links">
                         <h3>Contacto</h3>
                         <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-17.373706129949%2C-66.181301557111&fbclid=IwAR3TFAmj3zt82zgdhO1TObvcl6I6MpfTUzo8JpBs3bb0LqFJ-fr3dmgKO84">Ubicacion</a>
@@ -133,6 +144,7 @@ endif;
                 <hr>
                 <div class="row">
                     <div class="column links">
+                        <!-- SE CARGAN LAS URL A LOS BOTONOES DE REDES -->
                         <h3>SIGUENOS EN NUESTRAS REDES</h3>
                         <a target="_blank" rel="noopener" href="https://www.facebook.com/libreriasverbodivino">Facebook</a>
                         <a target="_blank" rel="noopener" href="https://www.youtube.com/@verbodivinoestella">Youtube</a>

@@ -7,10 +7,15 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
+            <!-- enlace para editar los marcadores-->
             <h4 class="heading"><?= __('Actions') ?></h4>
+            <!-- Enlace para editar el marcador -->
             <?= $this->Html->link(__('Edit Bookmark'), ['action' => 'edit', $bookmark->id], ['class' => 'side-nav-item']) ?>
+             <!-- Enlace para eliminar el marcador -->
             <?= $this->Form->postLink(__('Delete Bookmark'), ['action' => 'delete', $bookmark->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bookmark->id), 'class' => 'side-nav-item']) ?>
+            <!-- Enlace para ver la lista de marcadores -->
             <?= $this->Html->link(__('List Bookmarks'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <!-- Enlace para agregar un nuevo marcador -->
             <?= $this->Html->link(__('New Bookmark'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>

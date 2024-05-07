@@ -65,14 +65,25 @@ class BookmarksController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+        public function add()
     {
         $bookmark = $this->Bookmarks->newEntity($this->request->getData()); // Pasa los datos del formulario
         if ($this->request->is('post')) {
+            // Agregar el user_id del usuario autenticado
             $bookmark->user_id = $this->Auth->user('id');
-            if ($this->Bookmarks->save($bookmark)) {
-                $this->Flash->success('El favorito se ha guardado.');
-                return $this->redirect(['action' => 'index']);
+            
+            // Handle file upload
+            $imageFile = $this->request->getData('image_file');
+            $imagePath = WWW_ROOT . 'img' . DS . 'bookmarks' . DS . $imageFile->getClientFilename();
+            if ($imageFile->getError() === UPLOAD_ERR_OK) {
+                if ($this->Bookmarks->save($bookmark)) {
+                    $imageFile->moveTo($imagePath);
+                    $bookmark->image = 'bookmarks/' . $imageFile->getClientFilename(); // Save relative path to database
+                    if ($this->Bookmarks->save($bookmark)) {
+                        $this->Flash->success('El favorito se ha guardado.');
+                        return $this->redirect(['action' => 'index']);
+                    }
+                }
             }
             $this->Flash->error('El favorito podría no haberse guardado. Por favor, inténtalo de nuevo.');
         }
@@ -81,45 +92,33 @@ class BookmarksController extends AppController
         $this->set('_serialize', ['bookmark']);
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Bookmark id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
-        // Obtiene el bookmark con el ID proporcionado, incluyendo sus tags relacionados.
         $bookmark = $this->Bookmarks->get($id, [
             'contain' => ['Tags']
         ]);
-
-        // Verifica si la solicitud es de tipo PATCH, POST o PUT (es decir, si se envió un formulario para editar un favorito).
         if ($this->request->is(['patch', 'post', 'put'])) {
-            // Se parchea (patch) la entidad Bookmark con los datos de la solicitud.
             $bookmark = $this->Bookmarks->patchEntity($bookmark, $this->request->getData());
-            
-            // Se establece el user_id del bookmark como el ID del usuario autenticado.
             $bookmark->user_id = $this->Auth->user('id');
             
-            // Se intenta guardar el bookmark en la base de datos.
+            // Handle file upload
+            $imageFile = $this->request->getData('image_file');
+            if ($imageFile) {
+                $imagePath = WWW_ROOT . 'img' . DS . 'bookmarks' . DS . $imageFile->getClientFilename();
+                if ($imageFile->getError() === UPLOAD_ERR_OK) {
+                    $imageFile->moveTo($imagePath);
+                    $bookmark->image = 'bookmarks/' . $imageFile->getClientFilename(); // Save relative path to database
+                }
+            }
+
             if ($this->Bookmarks->save($bookmark)) {
-                // Si se guarda correctamente, se muestra un mensaje de éxito y se redirige al usuario a la página index.
-                $this->Flash->success('El favorito se ha guardado.');
+                $this->Flash->success(__('The bookmark has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
-            // Si no se guarda correctamente, se muestra un mensaje de error.
-            $this->Flash->error('El favorito podría no haberse guardado. Por favor, inténtalo de nuevo.');
+            $this->Flash->error(__('The bookmark could not be saved. Please, try again.'));
         }
-
-        // Se obtienen los tags disponibles para los favoritos.
         $tags = $this->Bookmarks->Tags->find('list');
-
-        // Se envían los datos de la entidad bookmark y los tags a la vista.
         $this->set(compact('bookmark', 'tags'));
-
-        // Se establece la serialización de la entidad bookmark para su uso en la API.
         $this->set('_serialize', ['bookmark']);
     }
 

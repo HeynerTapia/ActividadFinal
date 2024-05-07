@@ -10,6 +10,7 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
+            <!-- carga la pagina para agregar un libro -->
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Html->link(__('List Bookmarks'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
@@ -18,6 +19,7 @@
         <div class="bookmarks form content">
             <?= $this->Form->create($bookmark) ?>
             <fieldset>
+                <!-- añade todos los campo para un nuevo libro -->
                 <legend><?= __('Add Bookmark') ?></legend>
                 <?php
                     echo $this->Form->control('title');
@@ -25,6 +27,7 @@
                     echo $this->Form->control('url');
                     echo $this->Form->control('tags');
                 ?>
+                <!-- se carga el libro en la base de dato -->
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
